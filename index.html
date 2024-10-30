@@ -6,7 +6,6 @@
     <meta name="description" content="I SET SAIL - A Literary Collection">
     <title>I SET SAIL</title>
     <style>
-        /* Main styling for body and overall layout */
         html, body {
             height: 90%;
             margin: 0;
@@ -25,7 +24,7 @@
         header {
             padding: 2rem;
             background-color: #C5DFFB;
-            background-image: url(https://i.pinimg.com/originals/bb/3a/cd/bb3acd2dac7a1ff05a7831da824042ea.jpg); 
+            background-image: url(https://i.pinimg.com/originals/bb/3a/cd/bb3acd2dac7a1ff05a7831da824042ea.jpg);
             background-size: cover;
             background-position: center;
             color: white;
@@ -49,7 +48,10 @@
         .tabs {
             display: flex;
             justify-content: center;
-            margin: 2rem 0;
+            flex-wrap: wrap;
+            max-width: 80%;
+            margin: 2rem auto;
+            gap: 0.5rem;
         }
 
         .tabs a {
@@ -58,7 +60,7 @@
             color: #1C6BA0;
             background-color: #E1EDF4;
             border: 2px solid #1C6BA0;
-            margin: 0 1rem;
+            margin: 0.5rem;
             border-radius: 8px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
@@ -101,11 +103,119 @@
             color: #4A6A85;
         }
 
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .nav-buttons a {
+            display: inline-block;
+            padding: 5px 10px; 
+            margin: 0 5px; 
+            font-size: 14px; 
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #173e68; 
+            border: none; 
+            border-radius: 4px; 
+            transition: background-color 0.3s; 
+        }
+
+        .nav-buttons a:hover {
+            background-color: hsl(211, 70%, 37%); 
+        }
+
+        /* Comment Section Styles */
+        .comment-section {
+            margin: 2rem auto;
+            padding: 1rem;
+            border: 1px solid #D8E2EB;
+            border-radius: 8px;
+            width: 80%;
+            background-color: #F7F7F7;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .comment-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-section textarea {
+            resize: none;
+            margin-bottom: 1rem;
+            padding: 10px;
+            border: 1px solid #D8E2EB;
+            border-radius: 4px;
+        }
+
+        .comment-section button {
+            padding: 10px;
+            background-color: #1C6BA0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .comment-section button:hover {
+            background-color: #173e68;
+        }
+
+        .comments {
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none; /* Hide comments initially */
+        }
+
+        .comment {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #D8E2EB;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            position: relative;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 5px;
+        }
+
+        .show-comments {
+            margin-top: 1rem;
+            background-color: #1C6BA0;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .show-comments:hover {
+            background-color: #173e68;
+        }
+
         footer {
             padding: 1.5rem;
             background-color: #4090be;
-            background-size: cover;
-            background-position: center;
             color: #587994;
             width: 100%;
         }
@@ -113,9 +223,6 @@
         @media (max-width: 768px) {
             .tabs {
                 flex-direction: column;
-            }
-            .tabs a {
-                margin: 1rem 0;
             }
             section {
                 width: 95%;
@@ -140,108 +247,124 @@
         </div>
 
         <section id="home">
-            <h2>Hello! Welcome to this Collections</h2>
-            <p>I am LetYourPen, and this is "I Set Sail." When I picture sailing, I see a boat moving into ocean, leaving the shore behind. Life, like the ocean, has calm days and storms. "I Set Sail" is about courage—about stepping into the unknown, facing whatever comes, and discovering what lies beyond the horizon.</p>
+            <h2>Hello! Welcome to this Collection</h2>
+            <p>I am LetYourPen, and this is "I Set Sail." When I picture sailing, I see a boat moving into the ocean, leaving the shore behind. Life, like the ocean, has calm days and storms. "I Set Sail" is about courage—about stepping into the unknown, facing whatever comes, and discovering what lies beyond the horizon.</p>
         </section>
-        
+
+        <!-- Essays Section with Navigation -->
         <section id="essays">
             <h2>Essays</h2>
             <div class="tabs">
                 <a href="#essay1">Essay 1</a>
                 <a href="#essay2">Essay 2</a>
                 <a href="#essay3">Essay 3</a>
+                <a href="#essay4">Essay 4</a>
+                <a href="#essay5">Essay 5</a>
             </div>
         </section>
-
         <section id="essay1">
-            <h2>Reflections on Nature</h2>
-            <p>Exploring the depth of nature's beauty...</p>
+            <h2>Essay 1 Title</h2>
+            <p>This is the content of Essay 1.</p>
         </section>
         <section id="essay2">
-            <h2>Philosophy of Love</h2>
-            <p>Discussing love's complexities...</p>
+            <h2>Essay 2 Title</h2>
+            <p>This is the content of Essay 2.</p>
         </section>
         <section id="essay3">
-            <h2>Paths of Growth</h2>
-            <p>A journey through personal development...</p>
+            <h2>Essay 3 Title</h2>
+            <p>This is the content of Essay 3.</p>
+        </section>
+        <section id="essay4">
+            <h2>Essay 4 Title</h2>
+            <p>This is the content of Essay 4.</p>
+        </section>
+        <section id="essay5">
+            <h2>Essay 5 Title</h2>
+            <p>This is the content of Essay 5.</p>
         </section>
 
-        <section id="poems">
-            <h2>Poems</h2>
-            <div class="tabs">
-                <a href="#poem1">1</a>
-                <a href="#poem2">2</a>
-                <a href="#poem3">3</a>
-                <a href="#poem4">4</a>
-                <a href="#poem5">5</a>
-                <a href="#poem6">6</a>
-                <a href="#poem7">7</a>
-                <a href="#poem8">8</a>
-                <a href="#poem9">9</a>
-                <a href="#poem10">10</a>
-            </div>
-
-            <div class="tabs">
-            <a href="#poem11">11</a>
-                <a href="#poem12">12</a>
-                <a href="#poem13">13</a>
-                <a href="#poem14">14</a>
-                <a href="#poem15">15</a>
-                <a href="#poem16">16</a>
-                <a href="#poem17">17</a>
-                <a href="#poem18">18</a>
-                <a href="#poem19">19</a>
-                <a href="#poem20">20</a>
-            </div>
-
-            <div class="tabs">
-            <a href="#poem21">21</a>
-            <a href="#poem22">23</a>
-            <a href="#poem24">24</a>
-            <a href="#poem25">25</a>
-            </div>
-
-        </section>
-
-        <section id="poem1">
-            <h2>Across the Horizon</h2>
-            <p>The waves call softly, a distant lullaby...</p>
-        </section>
-        <section id="poem2">
-            <h2>The Whispering Tide</h2>
-            <p>With each crest, the ocean speaks...</p>
-        </section>
-        <section id="poem3">
-            <h2>Beneath the Blue</h2>
-            <p>Down below, where the sunlight fades...</p>
-        </section>
-
-        <section id="books">
-            <h2>Books</h2>
-            <div class="tabs">
-                <a href="#book1">Book 1</a>
-                <a href="#book2">Book 2</a>
-                <a href="#book3">Book 3</a>
-            </div>
-        </section>
-
-        <section id="book1">
-            <h2>Journey of the Heart</h2>
-            <p>An exploration of human emotions...</p>
-        </section>
-        <section id="book2">
-            <h2>Oceans of Time</h2>
-            <p>A historical tale of love and loss...</p>
-        </section>
-        <section id="book3">
-            <h2>Waves of the Soul</h2>
-            <p>A collection of soulful poems and reflections...</p>
-        </section>
+        <!-- Comment Section -->
+        <div class="comment-section">
+            <h3>Leave a Comment</h3>
+            <form id="commentForm">
+                <textarea id="commentInput" rows="4" placeholder="Write your comment here..."></textarea>
+                <button type="submit">Submit</button>
+            </form>
+            <button class="show-comments" id="toggleComments">Show Comments</button>
+            <div class="comments" id="commentsContainer"></div>
+        </div>
     </main>
 
-    <footer> 
-        <p>© 2022 Literary Collection | LetYourPen_ </p>
+    <footer>
+        <p>&copy; 2024 LetYourPen. All rights reserved.</p>
     </footer>
-    
+
+    <script>
+        const commentForm = document.getElementById('commentForm');
+        const commentInput = document.getElementById('commentInput');
+        const commentsContainer = document.getElementById('commentsContainer');
+        const toggleCommentsButton = document.getElementById('toggleComments');
+
+        // Initialize comments visibility
+        let commentsVisible = false;
+
+        commentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const commentElement = createCommentElement(commentText);
+                commentsContainer.appendChild(commentElement);
+                commentInput.value = ''; // Clear input after submission
+                commentsVisible = true; // Show comments after a new comment is added
+                toggleCommentsButton.textContent = 'Hide Comments';
+                commentsContainer.style.display = 'block'; // Show comments container
+            }
+        });
+
+        function createCommentElement(text) {
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment');
+            commentDiv.innerHTML = `
+                <span>${text}</span>
+                <button class="delete-button">Delete</button>
+                <button class="heart-button">❤️</button>
+                <span class="heart-count">0</span>
+            `;
+
+            const deleteButton = commentDiv.querySelector('.delete-button');
+            deleteButton.addEventListener('click', function() {
+                commentsContainer.removeChild(commentDiv);
+            });
+
+            const heartButton = commentDiv.querySelector('.heart-button');
+            const heartCount = commentDiv.querySelector('.heart-count');
+            let hearted = false;
+
+            heartButton.addEventListener('click', function() {
+                hearted = !hearted; // Toggle hearted state
+                if (hearted) {
+                    heartButton.style.color = 'red'; // Change heart button color
+                    heartCount.textContent = parseInt(heartCount.textContent) + 1; // Increment heart count
+                } else {
+                    heartButton.style.color = ''; // Reset color
+                    heartCount.textContent = parseInt(heartCount.textContent) - 1; // Decrement heart count
+                }
+            });
+
+            return commentDiv;
+        }
+
+        toggleCommentsButton.addEventListener('click', function() {
+            commentsVisible = !commentsVisible;
+            if (commentsVisible) {
+                commentsContainer.style.display = 'block';
+                toggleCommentsButton.textContent = 'Hide Comments';
+            } else {
+                commentsContainer.style.display = 'none';
+                toggleCommentsButton.textContent = 'Show Comments';
+            }
+        });
+    </script>
+
 </body>
 </html>
