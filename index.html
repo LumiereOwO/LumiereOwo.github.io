@@ -278,7 +278,44 @@
 
         form.addEventListener('submit', addComment);
         loadComments();
-    </script>
+   const form = document.getElementById('comment-form');
+    const commentsDiv = document.getElementById('comments');
 
+    async function loadComments() {
+        const response = await fetch('http://localhost:3000/comments');
+        const comments = await response.json();
+        commentsDiv.innerHTML = comments.map((comment, index) => `
+            <div class="comment">
+                <p>${comment.text}</p>
+                <button class="delete-button" onclick="deleteComment(${index})">Delete</button>
+            </div>
+        `).join('');
+    }
+
+    async function addComment(event) {
+        event.preventDefault();
+        const commentText = document.getElementById('comment').value;
+
+        await fetch('http://localhost:3000/comments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: commentText })
+        });
+
+        loadComments();
+        form.reset();
+    }
+
+    async function deleteComment(index) {
+        await fetch(`http://localhost:3000/comments/${index}`, {
+            method: 'DELETE'
+        });
+
+        loadComments();
+    }
+
+    form.addEventListener('submit', addComment);
+    loadComments();
+    </script>
 </body>
 </html>
