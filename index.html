@@ -103,29 +103,6 @@
             color: #4A6A85;
         }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .nav-buttons a {
-            display: inline-block;
-            padding: 5px 10px; 
-            margin: 0 5px; 
-            font-size: 14px; 
-            text-decoration: none;
-            color: #ffffff;
-            background-color: #173e68; 
-            border: none; 
-            border-radius: 4px; 
-            transition: background-color 0.3s; 
-        }
-
-        .nav-buttons a:hover {
-            background-color: hsl(211, 70%, 37%); 
-        }
-
         /* Comment Section Styles */
         .comment-section {
             margin: 2rem auto;
@@ -173,7 +150,6 @@
             margin-top: 1rem;
             max-height: 200px;
             overflow-y: auto;
-            display: block; /* Show comments by default */
         }
 
         .comment {
@@ -241,7 +217,6 @@
     </header>
 
     <main>
-
         <div class="tabs">
             <a href="#home" class="active">Home</a>
             <a href="#essays">Essays</a>
@@ -254,100 +229,19 @@
             <p>I am LetYourPen, and this is "I Set Sail." When I picture sailing, I see a boat moving into the ocean, leaving the shore behind. Life, like the ocean, has calm days and storms. "I Set Sail" is about courage—about stepping into the unknown, facing whatever comes, and discovering what lies beyond the horizon.</p>
         </section>
 
-        <!-- Essays Section with Navigation -->
+        <!-- Essays Section -->
         <section id="essays">
             <h2>Essays</h2>
-            <div class="tabs">
-                <a href="#essay1">Essay 1</a>
-                <a href="#essay2">Essay 2</a>
-                <a href="#essay3">Essay 3</a>
-                <a href="#essay4">Essay 4</a>
-                <a href="#essay5">Essay 5</a>
-            </div>
-        </section>
-        <section id="essay1">
-            <h2>Essay 1 Title</h2>
-            <p>This is the content of Essay 1.</p>
-        </section>
-        <section id="essay2">
-            <h2>Essay 2 Title</h2>
-            <p>This is the content of Essay 2.</p>
-        </section>
-        <section id="essay3">
-            <h2>Essay 3 Title</h2>
-            <p>This is the content of Essay 3.</p>
-        </section>
-        <section id="essay4">
-            <h2>Essay 4 Title</h2>
-            <p>This is the content of Essay 4.</p>
-        </section>
-        <section id="essay5">
-            <h2>Essay 5 Title</h2>
-            <p>This is the content of Essay 5.</p>
         </section>
 
-        <!-- Poems Section with Navigation -->
+        <!-- Poems Section -->
         <section id="poems">
             <h2>Poems</h2>
-            <div class="tabs">
-                <a href="#poem1">Poem 1</a>
-                <a href="#poem2">Poem 2</a>
-                <a href="#poem3">Poem 3</a>
-                <a href="#poem4">Poem 4</a>
-                <a href="#poem5">Poem 5</a>
-            </div>
-        </section>
-        <section id="poem1">
-            <h2>Poem 1 Title</h2>
-            <p>This is the content of Poem 1.</p>
-        </section>
-        <section id="poem2">
-            <h2>Poem 2 Title</h2>
-            <p>This is the content of Poem 2.</p>
-        </section>
-        <section id="poem3">
-            <h2>Poem 3 Title</h2>
-            <p>This is the content of Poem 3.</p>
-        </section>
-        <section id="poem4">
-            <h2>Poem 4 Title</h2>
-            <p>This is the content of Poem 4.</p>
-        </section>
-        <section id="poem5">
-            <h2>Poem 5 Title</h2>
-            <p>This is the content of Poem 5.</p>
         </section>
 
-        <!-- Books Section with Navigation -->
+        <!-- Books Section -->
         <section id="books">
             <h2>Books</h2>
-            <div class="tabs">
-                <a href="#book1">Book 1</a>
-                <a href="#book2">Book 2</a>
-                <a href="#book3">Book 3</a>
-                <a href="#book4">Book 4</a>
-                <a href="#book5">Book 5</a>
-            </div>
-        </section>
-        <section id="book1">
-            <h2>Book 1 Title</h2>
-            <p>This is the content of Book 1.</p>
-        </section>
-        <section id="book2">
-            <h2>Book 2 Title</h2>
-            <p>This is the content of Book 2.</p>
-        </section>
-        <section id="book3">
-            <h2>Book 3 Title</h2>
-            <p>This is the content of Book 3.</p>
-        </section>
-        <section id="book4">
-            <h2>Book 4 Title</h2>
-            <p>This is the content of Book 4.</p>
-        </section>
-        <section id="book5">
-            <h2>Book 5 Title</h2>
-            <p>This is the content of Book 5.</p>
         </section>
 
         <!-- Comment Section -->
@@ -366,113 +260,52 @@
     </footer>
 
     <script>
-        // Comment Section Functionality
         const form = document.getElementById('comment-form');
         const commentsDiv = document.getElementById('comments');
 
-        // Load comments from localStorage
         function loadComments() {
             const comments = JSON.parse(localStorage.getItem('comments')) || [];
-            commentsDiv.innerHTML = '';
-            comments.forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.classList.add('comment');
-                commentElement.innerHTML = `
+            commentsDiv.innerHTML = comments.map((comment, index) => `
+                <div class="comment">
                     <p>${comment.text}</p>
-                    <button class="delete-button" onclick="deleteComment('${comment.id}')">Delete</button>
-                    <button class="heart-button" onclick="toggleHeart('${comment.id}')">
-                        ❤️ <span class="heart-count" id="heart-count-${comment.id}">${comment.hearts}</span>
-                    </button>
-                `;
-                commentsDiv.appendChild(commentElement);
-            });
+                    <button class="delete-button" onclick="deleteComment(${index})">Delete</button>
+                    <button class="heart-button" onclick="likeComment(${index})">❤️</button>
+                    <span class="heart-count">${comment.likes || 0}</span>
+                </div>
+            `).join('');
         }
 
-        // Add new comment
-        form.addEventListener('submit', function(event) {
+        function saveComments(comments) {
+            localStorage.setItem('comments', JSON.stringify(comments));
+        }
+
+        function addComment(event) {
             event.preventDefault();
             const commentText = document.getElementById('comment').value;
             const comments = JSON.parse(localStorage.getItem('comments')) || [];
-            const newComment = {
-                id: Date.now().toString(),
-                text: commentText,
-                hearts: 0,
-            };
-            comments.push(newComment);
-            localStorage.setItem('comments', JSON.stringify(comments));
-            document.getElementById('comment').value = '';
+            comments.push({ text: commentText, likes: 0 });
+            saveComments(comments);
             loadComments();
-        });
-
-        // Delete comment
-        function deleteComment(id) {
-            let comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments = comments.filter(comment => comment.id !== id);
-            localStorage.setItem('comments', JSON.stringify(comments));
-            loadComments();
+            form.reset();
         }
 
-        // Toggle hearts
-        function toggleHeart(id) {
+        function deleteComment(index) {
             const comments = JSON.parse(localStorage.getItem('comments')) || [];
-            const comment = comments.find(c => c.id === id);
-            comment.hearts += 1; // Increase heart count
-            localStorage.setItem('comments', JSON.stringify(comments));
+            comments.splice(index, 1);
+            saveComments(comments);
             loadComments();
         }
 
-        // Initial load of comments
+        function likeComment(index) {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments[index].likes = (comments[index].likes || 0) + 1;
+            saveComments(comments);
+            loadComments();
+        }
+
+        form.addEventListener('submit', addComment);
         loadComments();
-        
-// Load comments from localStorage
-function loadComments() {
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    commentsDiv.innerHTML = '';
-    comments.forEach((comment, index) => {
-        const commentDiv = document.createElement('div');
-        commentDiv.className = 'comment';
-        commentDiv.innerHTML = `
-            <p>${comment.text}</p>
-            <button class="delete-button" onclick="deleteComment(${index})">Delete</button>
-            <button class="heart-button" onclick="toggleLike(${index})">❤️</button>
-            <span class="heart-count" id="heart-count-${index}">${comment.likes || 0}</span>
-        `;
-        commentsDiv.appendChild(commentDiv);
-    });
-}
-
-// Handle comment submission
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const commentText = document.getElementById('comment').value;
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    comments.push({ text: commentText, likes: 0 });
-    localStorage.setItem('comments', JSON.stringify(comments));
-    document.getElementById('comment').value = ''; // Clear the textarea
-    loadComments(); // Reload comments
-});
-
-// Delete a comment
-function deleteComment(index) {
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    comments.splice(index, 1); // Remove comment
-    localStorage.setItem('comments', JSON.stringify(comments));
-    loadComments(); // Reload comments
-}
-
-// Toggle like for a comment
-function toggleLike(index) {
-    const comments = JSON.parse(localStorage.getItem('comments')) || [];
-    comments[index].likes = (comments[index].likes || 0) + 1; // Increment like count
-    localStorage.setItem('comments', JSON.stringify(comments));
-    loadComments(); // Reload comments
-}
-
-// Load comments when the page loads
-loadComments();
-</script>
-
+    </script>
 
 </body>
 </html>
-
