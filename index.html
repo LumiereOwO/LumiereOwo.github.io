@@ -174,24 +174,6 @@
             padding: 2px 5px;
         }
 
-        .heart-button {
-            position: absolute;
-            bottom: 5px;
-            left: 5px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .heart-count {
-            position: absolute;
-            bottom: 5px;
-            left: 50px;
-            font-size: 14px;
-            color: #666;
-        }
-
         footer {
             padding: 1.5rem;
             background-color: #4090be;
@@ -269,8 +251,6 @@
                 <div class="comment">
                     <p>${comment.text}</p>
                     <button class="delete-button" onclick="deleteComment(${index})">Delete</button>
-                    <button class="heart-button" onclick="likeComment(${index})">❤️</button>
-                    <span class="heart-count">${comment.likes || 0}</span>
                 </div>
             `).join('');
         }
@@ -283,7 +263,7 @@
             event.preventDefault();
             const commentText = document.getElementById('comment').value;
             const comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments.push({ text: commentText, likes: 0 });
+            comments.push({ text: commentText });
             saveComments(comments);
             loadComments();
             form.reset();
@@ -292,13 +272,6 @@
         function deleteComment(index) {
             const comments = JSON.parse(localStorage.getItem('comments')) || [];
             comments.splice(index, 1);
-            saveComments(comments);
-            loadComments();
-        }
-
-        function likeComment(index) {
-            const comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments[index].likes = (comments[index].likes || 0) + 1;
             saveComments(comments);
             loadComments();
         }
