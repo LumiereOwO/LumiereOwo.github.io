@@ -12,10 +12,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       height: 100vh;
       margin: 0;
       overflow: hidden;
-      flex-direction: column;
+      position: relative;
       transition: all 0.5s ease;
     }
 
@@ -64,7 +65,7 @@
                    0 0 20px #ff66b2,
                    0 0 30px #ff66b2;
       animation: pulse 2s infinite;
-      z-index: 10;
+      z-index: 2;
     }
 
     @keyframes pulse {
@@ -76,10 +77,11 @@
       position: absolute;
       width: 40px;
       height: 40px;
-      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Pink_flower_icon.svg/1024px-Pink_flower_icon.svg.png');
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Pink_flower_icon.svg');
       background-size: cover;
-      animation: pop 1s forwards;
+      animation: pop 4s linear forwards;
       pointer-events: none;
+      z-index: 1;
     }
 
     @keyframes pop {
@@ -87,13 +89,13 @@
         transform: scale(0) translateY(0);
         opacity: 0;
       }
-      50% {
+      30% {
         transform: scale(1.2) translateY(-20px);
         opacity: 1;
       }
       100% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
+        transform: scale(1) translateY(100vh);
+        opacity: 0;
       }
     }
   </style>
@@ -112,18 +114,18 @@
       button.classList.add('hidden'); // Hide the button
       message.classList.remove('hidden'); // Show the message
 
-      // Start popping flowers
+      // Start creating flowers
       setInterval(createFlower, 300);
     });
 
     function createFlower() {
       const flower = document.createElement('div');
       flower.classList.add('flower');
-      flower.style.top = Math.random() * window.innerHeight + 'px';
       flower.style.left = Math.random() * window.innerWidth + 'px';
+      flower.style.top = '-50px'; // Start above the screen
       document.body.appendChild(flower);
 
-      // Remove flower after 4 seconds
+      // Remove flower after animation
       setTimeout(() => flower.remove(), 4000);
     }
   </script>
