@@ -78,7 +78,7 @@
       height: 40px;
       background-image: url('https://openclipart.org/image/2400px/svg_to_png/238032/sakura-flower.png');
       background-size: cover;
-      animation: fall 5s linear forwards;
+      animation: fall 8s linear forwards;
       cursor: pointer;
       z-index: 1;
     }
@@ -103,7 +103,7 @@
       opacity: 0.8;
       animation: bubblePop 1s forwards;
       pointer-events: none;
-      z-index: 2;
+      z-index: 3;
     }
 
     @keyframes bubblePop {
@@ -142,34 +142,55 @@
       flower.style.left = Math.random() * (window.innerWidth - 40) + 'px';
       flower.style.top = '-60px';
 
-      // When flower is clicked
-      flower.addEventListener('click', function(e) {
-        // Get the position
-        const x = e.clientX;
-        const y = e.clientY;
-
-        // Create the bubble
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        bubble.style.left = (x - 15) + 'px'; // Center the bubble
-        bubble.style.top = (y - 15) + 'px';
-        document.body.appendChild(bubble);
-
-        // Remove flower and bubble after popping
-        flower.remove();
-        setTimeout(() => {
-          bubble.remove();
-        }, 1000);
-      });
-
       document.body.appendChild(flower);
 
-      // Remove flower if it reaches bottom
+      // Animate fall
+      flower.animate([
+        { transform: 'translateY(-60px) rotate(0deg)', opacity: 1 },
+        { transform: `translateY(${window.innerHeight}px) rotate(360deg)`, opacity: 0 }
+      ], {
+        duration: 8000,
+        easing: 'linear',
+        iterations: 1
+      });
+
+      // Remove flower after animation
       setTimeout(() => {
-        if (document.body.contains(flower)) {
+        if (flower.parentNode) {
           flower.remove();
         }
-      }, 5000);
+      }, 8000);
+
+      // Handle click and touch
+      flower.addEventListener('click', (e) => {
+        popBubble(flower);
+      });
+
+      flower.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        popBubble(flower);
+      });
+    }
+
+    function popBubble(flower) {
+      const rect = flower.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      bubble.style.left = (x - 15) + 'px';
+      bubble.style.top = (y - 15) + 'px';
+
+      document.body.appendChild(bubble);
+
+      flower.remove();
+
+      setTimeout(() => {
+        if (bubble.parentNode) {
+          bubble.remove();
+        }
+      }, 1000);
     }
   </script>
 
