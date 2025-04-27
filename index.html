@@ -15,6 +15,8 @@
       height: 100vh;
       margin: 0;
       overflow: hidden;
+      flex-direction: column;
+      transition: all 0.5s ease;
     }
 
     .btn {
@@ -49,90 +51,80 @@
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
     }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 0 10px #ff99cc,
+                   0 0 20px #ff66b2,
+                   0 0 30px #ff66b2;
+      animation: pulse 2s infinite;
+      z-index: 10;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .flower {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Pink_flower_icon.svg/1024px-Pink_flower_icon.svg.png');
+      background-size: cover;
+      animation: pop 1s forwards;
+      pointer-events: none;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0) translateY(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.2) translateY(-20px);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <button class="btn floating" onclick="openNewTab()">bruh</button>
+  <button class="btn floating" id="bruhButton">bruh</button>
+
+  <div class="message hidden" id="message">Wala kang kausap na mariel 1 week</div>
 
   <script>
-    function openNewTab() {
-      const newWindow = window.open("", "_blank");
-      const htmlContent = `
-        <html>
-          <head>
-            <title>Message</title>
-            <style>
-              body {
-                background: radial-gradient(circle at center, #330033 0%, #1a001a 100%);
-                color: #ffc0cb;
-                font-family: 'Poppins', sans-serif;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                height: 100vh;
-                margin: 0;
-                overflow: hidden;
-              }
-              .message {
-                font-size: 30px;
-                font-weight: bold;
-                text-align: center;
-                text-shadow: 0 0 10px #ff99cc,
-                             0 0 20px #ff66b2,
-                             0 0 30px #ff66b2;
-                animation: pulse 2s infinite;
-                z-index: 10;
-              }
-              @keyframes pulse {
-                0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.05); opacity: 0.8; }
-              }
-              .flower {
-                position: absolute;
-                width: 40px;
-                height: 40px;
-                background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Pink_flower_icon.svg/1024px-Pink_flower_icon.svg.png');
-                background-size: cover;
-                animation: pop 1s forwards;
-              }
-              @keyframes pop {
-                0% {
-                  transform: scale(0) translateY(0);
-                  opacity: 0;
-                }
-                50% {
-                  transform: scale(1.2) translateY(-20px);
-                  opacity: 1;
-                }
-                100% {
-                  transform: scale(1) translateY(0);
-                  opacity: 1;
-                }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="message">Wala kang kausap na mariel 1 week</div>
+    const button = document.getElementById('bruhButton');
+    const message = document.getElementById('message');
 
-            <script>
-              function createFlower() {
-                const flower = document.createElement('div');
-                flower.classList.add('flower');
-                flower.style.top = Math.random() * 100 + 'vh';
-                flower.style.left = Math.random() * 100 + 'vw';
-                document.body.appendChild(flower);
-                setTimeout(() => flower.remove(), 4000);
-              }
+    button.addEventListener('click', () => {
+      button.classList.add('hidden'); // Hide the button
+      message.classList.remove('hidden'); // Show the message
 
-              setInterval(createFlower, 300);
-            </script>
-          </body>
-        </html>
-      `;
-      newWindow.document.write(htmlContent);
-      newWindow.document.close();
+      // Start popping flowers
+      setInterval(createFlower, 300);
+    });
+
+    function createFlower() {
+      const flower = document.createElement('div');
+      flower.classList.add('flower');
+      flower.style.top = Math.random() * window.innerHeight + 'px';
+      flower.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(flower);
+
+      // Remove flower after 4 seconds
+      setTimeout(() => flower.remove(), 4000);
     }
   </script>
 
