@@ -34,6 +34,7 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       z-index: 2;
+      position: relative; /* Ensure button is above the bubbles */
     }
 
     .btn:hover {
@@ -97,28 +98,36 @@
 
     .bubble {
       position: absolute;
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
       background: radial-gradient(circle at center, #ffc0cb 0%, #ff66b2 70%);
       border-radius: 50%;
-      opacity: 0.6;
+      opacity: 0.8;
       pointer-events: none;
-      z-index: 0;
-      animation: bubblePop 5s infinite ease-in-out;
+      z-index: 1;
+      animation: bubbleFall 2s ease-in-out infinite, bounce 0.5s ease-in-out infinite alternate;
     }
 
-    @keyframes bubblePop {
+    @keyframes bubbleFall {
       0% {
-        transform: scale(1);
+        transform: translateY(-150px);
         opacity: 1;
       }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(0);
+      }
       50% {
-        transform: scale(1.5);
-        opacity: 0.7;
+        transform: translateY(-10px);
       }
       100% {
-        transform: scale(2);
-        opacity: 0.5;
+        transform: translateY(0);
       }
     }
 
@@ -134,9 +143,14 @@
     const button = document.getElementById('bruhButton');
     const message = document.getElementById('message');
 
+    let ballInterval;
+
     button.addEventListener('click', () => {
       button.classList.add('hidden');
       message.classList.remove('hidden');
+
+      // Stop creating memory balls after button click
+      clearInterval(ballInterval);
 
       // Start creating flowers
       setInterval(createFlower, 400);
@@ -166,52 +180,25 @@
           flower.remove();
         }
       }, 8000);
-
-      // Handle click and touch
-      flower.addEventListener('click', (e) => {
-        popBubble(flower);
-      });
-
-      flower.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        popBubble(flower);
-      });
     }
 
-    function popBubble(flower) {
-      const rect = flower.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-
+    function createBubble() {
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
-      bubble.style.left = (x - 75) + 'px';
-      bubble.style.top = (y - 75) + 'px';
+      
+      // Position bubbles behind the button
+      const buttonRect = button.getBoundingClientRect();
+      const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+      const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+
+      bubble.style.left = buttonCenterX - 60 + 'px'; // Offset so it is centered behind the button
+      bubble.style.top = buttonCenterY - 60 + 'px'; // Offset for a nice starting position
 
       document.body.appendChild(bubble);
-
-      flower.remove();
-
-      setTimeout(() => {
-        if (bubble.parentNode) {
-          bubble.remove();
-        }
-      }, 1000);
     }
 
-    // Create huge bubbles in the background that move with device orientation
-    function createBackgroundBubbles() {
-      for (let i = 0; i < 10; i++) {
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        bubble.style.left = Math.random() * window.innerWidth + 'px';
-        bubble.style.top = Math.random() * window.innerHeight + 'px';
-        document.body.appendChild(bubble);
-      }
-    }
-
-    // Call to create background bubbles
-    createBackgroundBubbles();
+    // Create bubbles at regular intervals before button click
+    ballInterval = setInterval(createBubble, 400);
 
     // Detect device orientation and move the bubbles accordingly
     window.addEventListener('deviceorientation', (event) => {
