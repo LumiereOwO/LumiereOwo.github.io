@@ -1,76 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruh Button</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bruh Button</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
 
-        .btn {
-            background-color: #1f1f1f;
-            color: #fff;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-        }
+    .btn {
+      background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+      color: #fff;
+      padding: 20px 40px;
+      font-size: 24px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7),
+                  inset 0 -4px 8px rgba(255, 255, 255, 0.1),
+                  inset 0 4px 8px rgba(0, 0, 0, 0.6);
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
 
-        .btn:hover {
-            background-color: #333;
-            transform: scale(1.05);
-        }
-    </style>
+    .btn:hover {
+      background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+      transform: scale(1.1) rotateX(10deg);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.9),
+                  inset 0 -6px 10px rgba(255, 255, 255, 0.05),
+                  inset 0 6px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Optional nice floating animation */
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <button class="btn" onclick="openNewTab()">bruh</button>
+  <button class="btn floating" onclick="openNewTab()">bruh</button>
 
-    <script>
-        function openNewTab() {
-            const newWindow = window.open("", "_blank");
-            const htmlContent = `
-                <html>
-                    <head>
-                        <title>Message</title>
-                        <style>
-                            body {
-                                background-color: #000;
-                                color: #fff;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 100vh;
-                                margin: 0;
-                                font-family: 'Arial', sans-serif;
-                            }
-                            .message {
-                                font-size: 24px;
-                                text-align: center;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="message">Wala kang kausap na mariel 1 week</div>
-                    </body>
-                </html>
-            `;
-            newWindow.document.write(htmlContent);
-            newWindow.document.close();
-        }
-    </script>
+  <script>
+    function openNewTab() {
+      const newWindow = window.open("", "_blank");
+      const htmlContent = `
+        <html>
+          <head>
+            <title>Message</title>
+            <style>
+              body {
+                background: radial-gradient(circle at center, #000 0%, #111 100%);
+                color: #fff;
+                font-family: 'Poppins', sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                overflow: hidden;
+              }
+              .message {
+                font-size: 30px;
+                font-weight: bold;
+                text-shadow: 0 0 10px rgba(255,255,255,0.5),
+                             0 0 20px rgba(255,255,255,0.3),
+                             0 0 30px rgba(255,255,255,0.2);
+                animation: pulse 2s infinite;
+              }
+              @keyframes pulse {
+                0%, 100% {
+                  transform: scale(1);
+                  opacity: 1;
+                }
+                50% {
+                  transform: scale(1.05);
+                  opacity: 0.8;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="message">Wala kang kausap na mariel 1 week</div>
+          </body>
+        </html>
+      `;
+      newWindow.document.write(htmlContent);
+      newWindow.document.close();
+    }
+  </script>
 
 </body>
 </html>
