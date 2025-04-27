@@ -34,8 +34,6 @@
       transition: all 0.4s ease;
       text-transform: uppercase;
       letter-spacing: 2px;
-      background-size: 60px 60px;
-      background-position: center;
       position: relative;
     }
 
@@ -100,15 +98,16 @@
       50% { transform: scale(1.05); opacity: 0.8; }
     }
 
+    /* Still flower with fall animation */
     .flower {
       position: absolute;
       width: 60px;
       height: 60px;
-      background-color: #ff66b2;
-      border-radius: 50%;
-      animation: fall 8s linear forwards;
+      background-image: url('https://openclipart.org/image/2400px/svg_to_png/238032/sakura-flower.png'); /* Flower Image */
+      background-size: cover;
       cursor: pointer;
       z-index: 1;
+      animation: fall 8s linear forwards;
     }
 
     @keyframes fall {
@@ -168,26 +167,9 @@
       const flower = document.createElement('div');
       flower.classList.add('flower');
       flower.style.left = Math.random() * (window.innerWidth - 60) + 'px';
-      flower.style.top = '-60px';
+      flower.style.top = '-60px'; // Starts above the screen
 
       document.body.appendChild(flower);
-
-      // Animate fall
-      flower.animate([ 
-        { transform: 'translateY(-60px) rotate(0deg)', opacity: 1 },
-        { transform: `translateY(${window.innerHeight}px) rotate(360deg)`, opacity: 0 }
-      ], {
-        duration: 8000,
-        easing: 'linear',
-        iterations: 1
-      });
-
-      // Remove flower after animation
-      setTimeout(() => {
-        if (flower.parentNode) {
-          flower.remove();
-        }
-      }, 8000);
 
       // Handle click and touch
       flower.addEventListener('click', (e) => {
