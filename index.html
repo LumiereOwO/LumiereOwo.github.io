@@ -33,6 +33,7 @@
       transition: all 0.4s ease;
       text-transform: uppercase;
       letter-spacing: 2px;
+      z-index: 2;
     }
 
     .btn:hover {
@@ -96,26 +97,31 @@
 
     .bubble {
       position: absolute;
-      width: 100px;
-      height: 100px;
+      width: 150px;
+      height: 150px;
       background: radial-gradient(circle at center, #ffc0cb 0%, #ff66b2 70%);
       border-radius: 50%;
-      opacity: 0.8;
-      animation: bubblePop 1s forwards;
+      opacity: 0.6;
       pointer-events: none;
-      z-index: 3;
+      z-index: 0;
+      animation: bubblePop 5s infinite ease-in-out;
     }
 
     @keyframes bubblePop {
       0% {
-        transform: scale(0.5);
+        transform: scale(1);
         opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.7;
       }
       100% {
         transform: scale(2);
-        opacity: 0;
+        opacity: 0.5;
       }
     }
+
   </style>
 </head>
 <body>
@@ -179,8 +185,8 @@
 
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
-      bubble.style.left = (x - 50) + 'px';
-      bubble.style.top = (y - 50) + 'px';
+      bubble.style.left = (x - 75) + 'px';
+      bubble.style.top = (y - 75) + 'px';
 
       document.body.appendChild(bubble);
 
@@ -193,6 +199,20 @@
       }, 1000);
     }
 
+    // Create huge bubbles in the background that move with device orientation
+    function createBackgroundBubbles() {
+      for (let i = 0; i < 10; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.left = Math.random() * window.innerWidth + 'px';
+        bubble.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(bubble);
+      }
+    }
+
+    // Call to create background bubbles
+    createBackgroundBubbles();
+
     // Detect device orientation and move the bubbles accordingly
     window.addEventListener('deviceorientation', (event) => {
       const x = event.gamma; // Left to right tilt in degrees
@@ -200,8 +220,8 @@
 
       const bubbles = document.querySelectorAll('.bubble');
       bubbles.forEach(bubble => {
-        const moveX = (x / 90) * window.innerWidth / 2; // Adjust sensitivity
-        const moveY = (y / 90) * window.innerHeight / 2; // Adjust sensitivity
+        const moveX = (x / 90) * window.innerWidth / 3; // Adjust sensitivity
+        const moveY = (y / 90) * window.innerHeight / 3; // Adjust sensitivity
 
         bubble.style.transform = `translate(${moveX}px, ${moveY}px)`;
       });
