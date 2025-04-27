@@ -34,7 +34,7 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       z-index: 2;
-      position: relative; /* Ensure button is above the bubbles */
+      position: relative;
     }
 
     .btn:hover {
@@ -106,6 +106,8 @@
       pointer-events: none;
       z-index: 1;
       animation: bubbleFall 2s ease-in-out infinite, bounce 0.5s ease-in-out infinite alternate;
+      transform-origin: center center;
+      box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5); /* Adding 3D shadow */
     }
 
     @keyframes bubbleFall {
@@ -124,7 +126,7 @@
         transform: translateY(0);
       }
       50% {
-        transform: translateY(-10px);
+        transform: translateY(-20px);
       }
       100% {
         transform: translateY(0);
@@ -200,19 +202,6 @@
     // Create bubbles at regular intervals before button click
     ballInterval = setInterval(createBubble, 400);
 
-    // Detect device orientation and move the bubbles accordingly
-    window.addEventListener('deviceorientation', (event) => {
-      const x = event.gamma; // Left to right tilt in degrees
-      const y = event.beta; // Front to back tilt in degrees
-
-      const bubbles = document.querySelectorAll('.bubble');
-      bubbles.forEach(bubble => {
-        const moveX = (x / 90) * window.innerWidth / 3; // Adjust sensitivity
-        const moveY = (y / 90) * window.innerHeight / 3; // Adjust sensitivity
-
-        bubble.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      });
-    });
   </script>
 
 </body>
