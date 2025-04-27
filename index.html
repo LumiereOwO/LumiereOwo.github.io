@@ -151,9 +151,10 @@
       button.classList.add('hidden');
       message.classList.remove('hidden');
 
-      // Stop creating memory balls after button click
+      // Stop creating memory balls after button click and remove them
       clearInterval(ballInterval);
-
+      removeMemoryBalls();
+      
       // Start creating flowers
       setInterval(createFlower, 400);
     });
@@ -188,15 +189,20 @@
       const bubble = document.createElement('div');
       bubble.classList.add('bubble');
       
-      // Position bubbles behind the button
-      const buttonRect = button.getBoundingClientRect();
-      const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-      const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-
-      bubble.style.left = buttonCenterX - 60 + 'px'; // Offset so it is centered behind the button
-      bubble.style.top = buttonCenterY - 60 + 'px'; // Offset for a nice starting position
+      // Position bubbles randomly across the screen
+      const randomX = Math.random() * window.innerWidth;
+      bubble.style.left = randomX + 'px'; 
+      bubble.style.top = '-150px'; // Start position
 
       document.body.appendChild(bubble);
+    }
+
+    function removeMemoryBalls() {
+      // Find and remove all memory balls
+      const allBubbles = document.querySelectorAll('.bubble');
+      allBubbles.forEach(bubble => {
+        bubble.remove();
+      });
     }
 
     // Create bubbles at regular intervals before button click
