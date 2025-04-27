@@ -3,195 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bruh Button</title>
+  <title>Bruh Button with Neon Sakura</title>
   <style>
     body {
-      background-color: #1a001a;
-      color: #ffc0cb;
+      margin: 0;
+      overflow: hidden;
+      background: #1a001a;
       font-family: 'Poppins', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       height: 100vh;
-      margin: 0;
-      overflow: hidden;
       position: relative;
     }
 
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
     .btn {
+      position: relative;
+      z-index: 2;
       background: linear-gradient(145deg, #4d004d, #660066);
       color: #ffc0cb;
-      padding: 20px 40px;
-      font-size: 24px;
+      padding: 20px 50px;
+      font-size: 28px;
       border: none;
       border-radius: 20px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.5),
-                  inset 0 -4px 8px rgba(255, 255, 255, 0.1),
-                  inset 0 4px 8px rgba(0, 0, 0, 0.6);
-      transition: all 0.4s ease;
       text-transform: uppercase;
       letter-spacing: 2px;
+      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.5),
+                  0 0 15px #ff66b2,
+                  0 0 30px #ff66b2;
+      transition: all 0.4s ease;
     }
 
     .btn:hover {
       background: linear-gradient(145deg, #660066, #4d004d);
-      transform: scale(1.1) rotateX(10deg);
-      box-shadow: 0 12px 25px rgba(255, 182, 193, 0.7),
-                  inset 0 -6px 10px rgba(255, 255, 255, 0.1),
-                  inset 0 6px 10px rgba(0, 0, 0, 0.7);
+      transform: scale(1.1);
+      box-shadow: 0 12px 25px rgba(255, 182, 193, 0.8),
+                  0 0 20px #ff99cc,
+                  0 0 40px #ff99cc;
     }
 
-    .floating {
-      animation: floating 3s ease-in-out infinite;
-    }
-
-    @keyframes floating {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .message {
-      font-size: 30px;
-      font-weight: bold;
-      text-align: center;
-      text-shadow: 0 0 10px #ff99cc,
-                   0 0 20px #ff66b2,
-                   0 0 30px #ff66b2;
-      animation: pulse 2s infinite;
-      z-index: 2;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-    }
-
-    .flower {
+    .falling-petal {
       position: absolute;
-      width: 40px;
-      height: 40px;
-      background-image: url('https://openclipart.org/image/2400px/svg_to_png/238032/sakura-flower.png');
-      background-size: cover;
-      animation: fall 8s linear forwards;
-      cursor: pointer;
-      z-index: 1;
+      width: 8px;
+      height: 8px;
+      background-color: #ff66b2;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall 10s linear infinite;
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-60px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    .bubble {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(circle at center, #ffc0cb 0%, #ff66b2 70%);
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: bubblePop 1s forwards;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    @keyframes bubblePop {
-      0% {
-        transform: scale(0.5);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(2);
-        opacity: 0;
-      }
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <button class="btn floating" id="bruhButton">bruh</button>
+  <canvas id="sakuraCanvas"></canvas>
 
-  <div class="message hidden" id="message">Wala kang kausap na mariel 1 week</div>
+  <button class="btn" id="bruhButton">BRUHH</button>
 
   <script>
-    const button = document.getElementById('bruhButton');
-    const message = document.getElementById('message');
+    const canvas = document.getElementById('sakuraCanvas');
+    const ctx = canvas.getContext('2d');
 
-    button.addEventListener('click', () => {
-      button.classList.add('hidden');
-      message.classList.remove('hidden');
-
-      // Start creating flowers
-      setInterval(createFlower, 400);
-    });
-
-    function createFlower() {
-      const flower = document.createElement('div');
-      flower.classList.add('flower');
-      flower.style.left = Math.random() * (window.innerWidth - 40) + 'px';
-      flower.style.top = '-60px';
-
-      document.body.appendChild(flower);
-
-      // Animate fall
-      flower.animate([
-        { transform: 'translateY(-60px) rotate(0deg)', opacity: 1 },
-        { transform: `translateY(${window.innerHeight}px) rotate(360deg)`, opacity: 0 }
-      ], {
-        duration: 8000,
-        easing: 'linear',
-        iterations: 1
-      });
-
-      // Remove flower after animation
-      setTimeout(() => {
-        if (flower.parentNode) {
-          flower.remove();
-        }
-      }, 8000);
-
-      // Handle click and touch
-      flower.addEventListener('click', (e) => {
-        popBubble(flower);
-      });
-
-      flower.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        popBubble(flower);
-      });
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawTree();
     }
 
-    function popBubble(flower) {
-      const rect = flower.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-      const bubble = document.createElement('div');
-      bubble.classList.add('bubble');
-      bubble.style.left = (x - 15) + 'px';
-      bubble.style.top = (y - 15) + 'px';
+    function drawTree() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      document.body.appendChild(bubble);
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height);
+      drawBranch(0, -120, 12);
+      ctx.restore();
+    }
 
-      flower.remove();
+    function drawBranch(x, y, thickness) {
+      if (thickness < 2) return;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = 'rgba(255, 153, 204, 0.8)';
+      ctx.shadowColor = 'rgba(255, 102, 178, 1)';
+      ctx.shadowBlur = 20;
+      ctx.lineWidth = thickness;
+      ctx.stroke();
+
+      ctx.translate(x, y);
+
+      let branches = Math.random() > 0.5 ? 2 : 3;
+
+      for (let i = 0; i < branches; i++) {
+        ctx.save();
+        let angle = (Math.random() * 50 - 25) * Math.PI / 180;
+        let scale = 0.7 + Math.random() * 0.3;
+        ctx.rotate(angle);
+        ctx.scale(scale, scale);
+        drawBranch(0, -100, thickness * 0.7);
+        ctx.restore();
+      }
+
+      if (thickness < 4) {
+        // Draw flower
+        drawFlower();
+      }
+    }
+
+    function drawFlower() {
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * 5,
+                   -Math.sin((18 + i * 72) * Math.PI / 180) * 5);
+        ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * 2,
+                   -Math.sin((54 + i * 72) * Math.PI / 180) * 2);
+      }
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255, 204, 229, 0.9)';
+      ctx.shadowColor = 'rgba(255, 102, 178, 1)';
+      ctx.shadowBlur = 15;
+      ctx.fill();
+    }
+
+    // Falling petals function
+    function createFallingPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('falling-petal');
+      petal.style.left = Math.random() * window.innerWidth + 'px';
+      petal.style.animationDuration = (Math.random() * 6 + 4) + 's';
+      petal.style.animationDelay = Math.random() * 4 + 's';
+      document.body.appendChild(petal);
 
       setTimeout(() => {
-        if (bubble.parentNode) {
-          bubble.remove();
-        }
-      }, 1000);
+        petal.remove();
+      }, 10000);
     }
+
+    setInterval(createFallingPetal, 100);
+
   </script>
 
 </body>
